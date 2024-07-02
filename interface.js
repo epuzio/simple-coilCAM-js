@@ -704,12 +704,22 @@ function setUpCodeMirror(){
   }
 
 
-  document.getElementById("site").addEventListener("click", newTab, {capture: true});
+  document.getElementById("b_site").addEventListener("click", newTab, {capture: true});
   function newTab(){
     let newTab = document.createElement('a');
     newTab.href = "https://sambourgault.github.io/coilCAM-js/";
     newTab.target = "_blank";
     newTab.click();
+  }
+
+  document.getElementById("b_save").addEventListener("click", saveCode, {capture: true});
+  function saveCode(){
+    let textInEditor = editorCodeMirror.getValue();
+    var blob = new Blob([textInEditor], {type: "text/plain"});
+    var anchor = document.createElement("a");
+    anchor.href = URL.createObjectURL(blob);
+    anchor.download = "coilCAM-js.txt";
+    anchor.click();
   }
 
   
