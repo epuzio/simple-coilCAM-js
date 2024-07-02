@@ -24,46 +24,17 @@
 <body>
 
 
-<div class = "CC-header">
-  <h2>coilCAM-js</h2>
-  <div class = "CC-header-buttons">
-    <button type="button" id="b_run">run</button> 
-    <button type="button" id="b_save">save</button> 
-     <input type="file" id="file_input" hidden/>
-     <button type="button" id="b_upload">upload</button> 
-    <div class="dropdown">
-      <button type="button">examples</button>
-      <div id="example-dropdown" class="dropdown-content">
-        <a id="example-vase">demo vase</a>
-        <a id="example-cup">demo cup</a>
-        <a id="example-plate">demo plate</a>
-      </div>
-    </div>
-    <button type="button" id="b_docs">documentation</button> 
-  </div>
-  <div class = "CC-header-buttons">
-    <div class="dropdown">
-      <button type="printer-button" id="b_printer_dims">printer dimensions</button> 
-      <div id="example-dropdown" class="dropdown-content">
-        <a id="baby_pb">baby potterbot</a>
-        <a id="super_pb">super potterbot</a>
-      </div>
-    </div>
-  </div>
-</div>
 
 <div class="split">
-  <div class="split-files">
-    <input type="file" id="upload_data" hidden/>
-    <button type="upload-button" id="b_upload_files">upload files</button> 
-    <div class="files-group" id="dropbox">
-    </div>
-  </div>
   <div class="cell split-editors">
+    <button type="button" id="b_run">run</button> 
+    <button type="button" id="site">site</button> 
     <div class="cell split-editor">
-      <textarea id = "editor"></textarea>
+      <div class="codemirror-window">
+        <textarea id = "editor"></textarea>
+      </div>
     </div>
-    <div class="split-console">
+    <div class="cell split-console">
         <textarea id = "console"></textarea>
     </div> 
   </div>
@@ -74,15 +45,17 @@
 
 
 <script>
-  Split(['.split-files', '.split-editors', '.split-window'], {
-    sizes: [10, 40, 50],
+  Split(['.split-editors', '.split-window'], {
+    sizes: [40, 60],
     maxSize: [Infinity, Infinity],
-    minSize: 10,
+    minSize: [40, 100],
     direction: 'horizontal',
     cursor: 'row-resize'
   });
   Split(['.split-editor', '.split-console'], {
     sizes: [70, 30],
+    maxSize: [Infinity, Infinity],
+    minSize: 10,
     direction: 'vertical',
     cursor: 'col-resize'
   }

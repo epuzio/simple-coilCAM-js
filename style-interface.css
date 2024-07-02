@@ -249,7 +249,13 @@ h2{
   width: 100%;
   background: gray;
   height: 100%;
-  padding: 0px;
+  padding: 0em;
+}
+.codemirror-window {
+  width: 100%;
+  background: gray;
+  height: 100%;
+  padding: 0em;
 }
 .split-console {
   width: 100%;

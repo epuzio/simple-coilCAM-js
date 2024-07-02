@@ -686,51 +686,6 @@ function setUpCodeMirror(){
     consoleCodeMirror.replaceRange(`$ `+(errorString)+"\n", CodeMirror.Pos(consoleCodeMirror.lastLine()));
   }
   
-  //dropdown menu
-  const exampleVessels={  //list of all examples
-    "example-cup":["example_vessels/CoilCAM_BooleanDemoCupV1.js"], 
-    "example-vase":["example_vessels/CoilCAM_BooleanDemoDish.js"], 
-    "example-plate":["example_vessels/CoilCAM_BumpsDish.js"]
-  };
-
-  for (let buttonID in exampleVessels){
-    (function () {
-    document.getElementById(buttonID).addEventListener("click", function() {
-        let newText = getExampleVessel(exampleVessels[buttonID])
-          .then(text => {editorCodeMirror.setValue(text)});
-        editorCodeMirror.setValue(getExampleVessel(newText));
-      },);
-    }());
-  }
-  
-
-  document.getElementById('b_upload').addEventListener('click', function() {
-    document.getElementById('file_input').click(); //won't trigger when page loads
-  }, {capture: true});
-  
-  //changes codemirror editor based on uploaded file
-  document.getElementById('file_input').addEventListener('change', function(event) { 
-    const file = event.target.files[0];
-    if (file) {
-      const fileExtension = file.name.split('.').pop();
-      if (fileExtension === 'txt') {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          const contents = e.target.result;
-          editorCodeMirror.setValue(contents);
-        };
-        
-        reader.onerror = function(e) {
-          console.error('Error reading file:', e);
-        };
-        
-        reader.readAsText(file);
-      } else{
-        consoleCodeMirror.replaceRange(`$ `+(`${"File name must end with .txt"}`)+"\n", CodeMirror.Pos(consoleCodeMirror.lastLine()));
-      }
-    }
-  });
-
 
   
 
@@ -738,6 +693,7 @@ function setUpCodeMirror(){
 
   document.getElementById("b_run").addEventListener("click", runCode);
   function runCode() {
+    console.log("RUN");
     const codeToRun = editorCodeMirror.getValue();
     try {
       consoleCodeMirror.replaceRange(`$ `+eval(`${codeToRun}`)+"\n", CodeMirror.Pos(consoleCodeMirror.lastLine()));
@@ -747,171 +703,17 @@ function setUpCodeMirror(){
     }
   }
 
-  document.getElementById("b_save").addEventListener("click", saveCode, {capture: true});
-  function saveCode(){
-    let textInEditor = editorCodeMirror.getValue();
-    var blob = new Blob([textInEditor], {type: "text/plain"});
-    var anchor = document.createElement("a");
-    anchor.href = URL.createObjectURL(blob);
-    anchor.download = "coilCAM-js.txt";
-    anchor.click();
-  }
 
-  document.getElementById("b_docs").addEventListener("click", newTab, {capture: true});
+  document.getElementById("site").addEventListener("click", newTab, {capture: true});
   function newTab(){
     let newTab = document.createElement('a');
-    newTab.href = "https://github.com/sambourgault/coilCAM-docs";
+    newTab.href = "https://sambourgault.github.io/coilCAM-js/";
     newTab.target = "_blank";
     newTab.click();
   }
 
-  document.getElementById("baby_pb").addEventListener("click", function(){changePrinterDims("baby")});
-  document.getElementById("super_pb").addEventListener("click", function(){changePrinterDims("super")});
-  
-  function changePrinterDims(printerType){
-    if (printerType == "baby"){
-      bedDimensions = [280, 265, 305];
-      main(initialTranslation,initialRotation, initialFieldOfView);
-    }
-    if (printerType == "super"){
-      bedDimensions = [415, 405, 500];
-      main(initialTranslation,initialRotation, initialFieldOfView);
-    }
-  }
-
   
 
-  //Upload data
-  document.getElementById('b_upload_files').addEventListener('click', function(){
-    document.getElementById('upload_data').click();
-  }, {capture: true});
-  document.getElementById('upload_data').addEventListener('change', handleFiles);
-
-  function addFileAsButton(filename, contents){ //add file to lefthand toolbar
-    //add new button to dropbox area
-    const newButton = document.createElement('uploaded_file_button');
-    newButton.textContent = filename;
-    newButton.classList.add('dynamic-button');
-
-    //TOFIX: event listener to display file in new window on click
-    newButton.addEventListener('click', function() {
-      const dataBlob = new Blob([contents], { type: 'text/plain' });
-      var dataFile = new File([dataBlob], filename, {type: "text/plain"});
-      const dataUrl = URL.createObjectURL(dataFile);
-      window.open(dataUrl);
-    });
-    
-    
-    //add trash button to new button to throw out unnecessary files
-    const trashButton = document.createElement('trashButton');
-    trashButton.textContent = '\u{2612}';
-    trashButton.classList.add('trash-button');
-
-    
-    //event listener to remove file from localstorage
-    let divName = 'uploaded-file-div_'+filename.split('.')[0]+filename.split('.')[1];
-    trashButton.addEventListener('click', function() {
-      console.log("throw out file", filename);
-      localStorage.removeItem(filename);
-      parent = document.getElementById(divName);
-      while (parent.firstChild) {
-        parent.removeChild(parent.firstChild);
-      }
-      document.getElementById('dropbox').removeChild(parent);
-    });
-
-    let parentElement = document.createElement('div');
-    parentElement.id = divName;
-    parentElement.className = 'uploaded-file-div';
-    parentElement.classList.add('div');
-    document.getElementById('dropbox').appendChild(parentElement);
-    
-    document.getElementById(divName).appendChild(trashButton);
-    document.getElementById(divName).appendChild(newButton);
-  }
-
-  function handleFiles(event){ //adds file to sidebar
-    const file = event.target.files[0];
-    if (file) {
-      var fileExtension = file.name.split('.').pop();
-      if(localStorage.getItem(file.name) === null){ //file has unique name
-        console.log("extension", fileExtension);
-        let validExtensions = ['txt', 'wav', 'json', 'csv', 'mp3', 'mid']; //arbitrary, can be expanded
-        if (validExtensions.includes(fileExtension)) { 
-          var contents;
-          const reader = new FileReader();
-          reader.onload = function(e) {
-            contents = e.target.result;
-          };
-          
-          reader.onerror = function(e) {
-            console.error('Error reading file:', e);
-          };
-
-          if(fileExtension == 'txt' || fileExtension == 'csv' || fileExtension == 'json' ){
-            reader.readAsText(file); //keep original contents
-          } else if(fileExtension == 'wav' || fileExtension == 'mp3'|| fileExtension == 'mid'){ //store as base64
-            reader.readAsDataURL(file);
-          }
-          reader.onload = function () {
-              contents = (reader.result);
-            try{
-              localStorage.setItem(file.name, contents);
-              addFileAsButton(file.name, contents);
-            }catch(err){
-              if(err.name === "QuotaExceededError"){
-                printErrorToCodeMirror("File exceeds size limits.");
-              }
-            }
-          };
-        }
-        else{
-          printErrorToCodeMirror("File name must end with: "+validExtensions.join(" "));
-        }
-      }
-      else{
-        printErrorToCodeMirror("The file "+file.name+" already exists in localStorage.");
-      }
-    } else{
-      printErrorToCodeMirror("Error uploading file."); 
-    }
-    
-  }
-  
-
-  //drag + drop functionality
-  let dropbox = document.getElementById("dropbox");
-  dropbox.addEventListener('dragover', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    dropbox.classList.add('dragging');
-  });
-  dropbox.addEventListener('dragleave', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    dropbox.classList.remove('dragging');
-  });
-  dropbox.addEventListener("dragenter", function(e){
-    e.stopPropagation();
-    e.preventDefault();
-  });
-  dropbox.addEventListener("drop", function(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    const dt = e.dataTransfer;
-    const files = dt.files;
-    dropbox.classList.remove('dragging');
-    handleFiles({ target: { files: files } });
-  });
-
-  //load all files from localstorage on page load
-  document.addEventListener('DOMContentLoaded', function(e){
-    console.log("localstorage files");
-    for(let i = 0; i < localStorage.length; i++) {
-      addFileAsButton(localStorage.key(i), localStorage.getItem(localStorage.key(i)));
-    }
-  })
-  
 
 }
 
