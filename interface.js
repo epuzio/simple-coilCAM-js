@@ -656,8 +656,21 @@ function setUpCodeMirror(){
   textArea = document.getElementById("editor");
   textArea.className = 'codemirror_textarea';
 
+  // get search param from URL - tells us which example vessel to load in
+  // since there are no buttons in the simple viewer
+  const currentUrl = window.location.href;
+  const url = new URL (currentUrl);
+  const params = url.searchParams;
+  const vesselName = params.get('vessel'); // Replace 'paramName' with the name of your parameter
+  var pathToVessel = "";
+  if(vesselName === null){
+    pathToVessel = 'example_vessels/Starting_Vessel.js'; //name of vessel to be loaded as default
+  }else{
+    var pathToVessel = 'example_vessels/'+vesselName+'.js'; //from URL parameters
+  }
+  
   // configs
-  var pathToVessel = 'example_vessels/Starting_Vessel.js'; //name of vessel to be loaded as default
+  
   editorCodeMirror = CodeMirror.fromTextArea(textArea, {
     lineNumbers: true,
     mode: 'javascript',
@@ -686,6 +699,23 @@ function setUpCodeMirror(){
     consoleCodeMirror.replaceRange(`$ `+(errorString)+"\n", CodeMirror.Pos(consoleCodeMirror.lastLine()));
   }
   
+  //dropdown menu
+  const exampleVessels={  //list of all examples
+    "example-cup":["example_vessels/CoilCAM_BooleanDemoCupV1.js"], 
+    "example-vase":["example_vessels/CoilCAM_BooleanDemoDish.js"], 
+    "example-plate":["example_vessels/CoilCAM_BumpsDish.js"]
+  };
+
+  for (let buttonID in exampleVessels){
+    (function () {
+    document.getElementById(buttonID).addEventListener("click", function() {
+        let newText = getExampleVessel(exampleVessels[buttonID])
+          .then(text => {editorCodeMirror.setValue(text)});
+        editorCodeMirror.setValue(getExampleVessel(newText));
+      },);
+    }());
+    console.log("hmmm");
+  }
 
   
 
@@ -723,7 +753,7 @@ function setUpCodeMirror(){
   }
 
   
-
+  
 
 }
 
