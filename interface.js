@@ -660,10 +660,10 @@ function setUpCodeMirror(){
   const currentUrl = window.location.href;
   const url = new URL (currentUrl);
   const params = url.searchParams;
-  const vesselName = params.get('example'); // Replace 'paramName' with the name of your parameter
+  const vesselName = params.get('example'); //
   var pathToVessel = "";
   if(vesselName === null){
-    pathToVessel = 'example_vessels/Starting_Vessel.js'; //name of vessel to be loaded as default
+    pathToVessel = 'example_vessels/CoilCAM_BumpsDish.js'; //name of vessel to be loaded as default
   }else{
     console.log("caught path");
     var pathToVessel = 'example_vessels/'+vesselName+'.js'; //from URL parameters
