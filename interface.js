@@ -661,15 +661,18 @@ function setUpCodeMirror(){
   const currentUrl = window.location.href;
   const url = new URL (currentUrl);
   const params = url.searchParams;
-  const vesselName = params.get('vessel'); // Replace 'paramName' with the name of your parameter
+  const vesselName = params.get('example'); // Replace 'paramName' with the name of your parameter
   var pathToVessel = "";
   if(vesselName === null){
     pathToVessel = 'example_vessels/Starting_Vessel.js'; //name of vessel to be loaded as default
   }else{
+    console.log("caught path");
     var pathToVessel = 'example_vessels/'+vesselName+'.js'; //from URL parameters
   }
   
   // configs
+  // var pathToVessel = 'example_vessels/Starting_Vessel.js'; //name of vessel to be loaded as default
+  
   
   editorCodeMirror = CodeMirror.fromTextArea(textArea, {
     lineNumbers: true,

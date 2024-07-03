@@ -3,55 +3,82 @@
 <html>
 <!--<script src="https://greggman.github.io/webgl-lint/webgl-lint.js"></script>
 -->
-<link rel="stylesheet" href="/style-interface.92350a71.css">
-<script src="/codemirror.2020a708.js"></script>
-  <link rel="stylesheet" href="/codemirror.db200c26.css">
-  <script src="/javascript.c558db8e.js"></script>
-  <script src="/show-hint.de28ecf8.js"></script>
-  <script src="/javascript-hint.a3788b35.js"></script> 
-  <link rel="stylesheet" href="/show-hint.2249ad79.css">
 
-<script src="/style-interface.92350a71.js"></script><script src="/codemirror.db200c26.js"></script><script src="/show-hint.2249ad79.js"></script><body>
+<!-- Resizing windows -->
+<script src="https://unpkg.com/split.js/dist/split.min.js"></script>
 
-<h1>coilCAM-js</h1>
+<!-- Flatten-js for boolean operations -->
+<script src="https://www.npmjs.com/package/@flatten-js/core"></script>
+<script src="https://www.npmjs.com/package/@flatten-js/boolean-op"></script>
+<script src="https://www.npmjs.com/package/@flatten-js/interval-tree"></script>
+<script src="https://www.npmjs.com/package/@flatten-js/polygon-offset"></script>
 
-<div class="grid-container">
+<link rel="stylesheet" href="/b62f7afa2347abcc20cbdea592350a71.css">
+<script src="/6edc7a37e14a74b3a8a10f8f2020a708.js"></script>
+  <link rel="stylesheet" href="/c4fa3389f96252efcf849730db200c26.css">
+  <script src="/91502ac8d7602d68d49f376bc558db8e.js"></script>
+  <script src="/f83c34b047751876ca74cde8de28ecf8.js"></script>
+  <script src="/39efd3f0b75de0b867887f89a3788b35.js"></script> 
+  <link rel="stylesheet" href="/514842dd720c67579a73de6c2249ad79.css">
 
-  <div class="grid-child purple">
-    <button type="button" id="b_run">run</button>
-    <button type="button" id="b_save">save</button>
+<body>
 
-      <div class="codediv" id="code1">
-        <textarea id="editor"></textarea>
-      </div>
-      <div class="codediv" id="console1">
-        <textarea id="console"></textarea>
-      </div>
 
-  </div>
 
-  <div class="grid-child green">
-      <canvas id="canvas"></canvas>
+<div class="split">
+  <div class="cell split-editors">
+    <div class="buttons-div">
+      <button type="button" id="b_run">&#x25B6;</button> 
+      <!-- <button type="button" id="b_save">&#x25B6;</button>  -->
+      <button type="button" id="b_site" font-size="30px">&#x2398;</button> 
 
-  </div>
-
-  <div class="grid-child blue">
-    <div id="uiContainer">
-      <div id="ui">
-        <div id="x" class="sliders"></div>
-        <div id="y" class="sliders"></div>
-        <div id="z" class="sliders"></div>
-        <div id="angleX" class="sliders"></div>
-        <div id="angleY" class="sliders"></div>
-        <div id="angleZ" class="sliders"></div>
-        <!--<div id="scaleX" class="sliders"></div>
-        <div id="scaleY" class="sliders"></div>
-        <div id="scaleZ" class="sliders"></div>-->
+      <!-- FOR TESTING PURPOSES -->
+      <div class="dropdown">
+        <button type="button">examples</button>
+        <div id="example-dropdown" class="dropdown-content">
+          <a id="example-vase">demo vase</a>
+          <a id="example-cup">demo cup</a>
+          <a id="example-plate">demo plate</a>
+        </div>
       </div>
     </div>
-</div>
+    <div class="cell split-editor">
+      <div class="codemirror-window">
+        <textarea id="editor"></textarea>
+      </div>
+    </div>
+    <div class="cell split-console">
+        <textarea id="console"></textarea>
+    </div> 
+  </div>
+  <div class="split-window">
+    <canvas id="canvas"></canvas>
+  </div>
 </div>
 
+
+<script>Split(['.split-editors', '.split-window'], {
+  sizes: [40, 60],
+  maxSize: [Infinity, Infinity],
+  minSize: [40, 100],
+  direction: 'horizontal',
+  cursor: 'row-resize'
+});
+Split(['.split-editor', '.split-console'], {
+  sizes: [70, 30],
+  maxSize: [Infinity, Infinity],
+  minSize: 10,
+  direction: 'vertical',
+  cursor: 'col-resize'
+});</script>
+
+<!-- load txt -->
+<script>function loadTXT() {
+  var txt = "bla bla";
+  var e = document.getElementById("editor").value;
+  e.value = txt;
+  // document.getElementById("editor").value = "Fifth Avenue, New York City";
+}</script>
 
 
 
@@ -76,14 +103,15 @@
 
   <!-- fragment shader 3D -->
   <script id="fragment-shader-3d" type="x-shader/x-fragment">
-  precision mediump float;
-  
-  // Passed in from the vertex shader.
-  varying vec4 v_color;
-  
-  void main() {
-     gl_FragColor = v_color;
-  }
+    precision mediump float;
+    
+    // Passed in from the vertex shader.
+    varying vec4 v_color;
+    uniform vec4 fColor;
+    
+    void main() {
+      gl_FragColor = fColor;
+    }
   </script>
 
 <!-- vertex shader 2D-->
@@ -124,7 +152,10 @@ for webgl-utils, m3, m4, and webgl-lessons-ui.
 -->
 <script src="https://webglfundamentals.org/webgl/resources/webgl-utils.js"></script>
 <script src="https://webglfundamentals.org/webgl/resources/webgl-lessons-ui.js"></script>
-<script src="/interface.ea8ab421.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/polyline-normals/dist/polyline-normals.min.js"></script>
+<script type="module" src="/c680b607552f1865398553e1ea8ab421.js">
+  import {Base} from './coilcam-functions/setup/Base.js';
+</script>
 
 
 <!-- <script src="coilcam-functions/test.js"></script> -->
@@ -137,29 +168,46 @@ for webgl-utils, m3, m4, and webgl-lessons-ui.
 
 
 <!-- CoilCAM Functions -->
-<script src="/Exponential.8ee39d8a.js"></script>
-<script src="/Linear.de16f138.js"></script>
-<script src="/Sinusoidal.73b7f716.js"></script>
-<script src="/Square.e7f8abf9.js"></script>
-<script src="/Staircase.91743f2e.js"></script>
-<script src="/test.c54c0676.js"></script>
+<script src="/b33437f646051746a16629fd8ee39d8a.js"></script>
+<script src="/dfc46956acec8c2dc6dece69de16f138.js"></script>
+<script src="/02823f80590ba4d09f60006b73b7f716.js"></script>
+<script src="/faf4e0d99315d12acf8bda3ae7f8abf9.js"></script>
+<script src="/f8a6731e7ddc687513dc685291743f2e.js"></script>
+<script src="/c70c5945b6b09fadf4f83f3632983b9d.js"></script>
+<script type="module" src="/9580b134a2719f39ba1959883a2daf8a.js">
+  import {Waveform} from './coilcam-functions/function-operators/Waveform.js';
+</script>
 
-<script src="/GCodeGenerator.55af4b37.js"></script>
+<script src="/81317be3c4a3ad2cb405ad5bc54c0676.js"></script>
 
-<!-- <script src="coilcam-functions/setup/GCodeGenerator.js" type="module"></script> -->
-<script src="/ToolpathUnitGenerator.f936288e.js"></script>
-<script src="/Base.cef09e15.js"></script>
+<script src="/c99279268980bab5371ffc4c55af4b37.js"></script>
+<script src="/e08dfef1b812b7d364558c4a4e28c305.js"></script>
+<script src="/96f87f620a1fe504dac67b42f936288e.js"></script>
+<script src="/a3ae18b1edf8c660a7ed7fbc6eb1dab8.js"></script>
+<script type="module" src="/1f460603deb378855d3570cccef09e15.js">
+  import {Base} from './coilcam-functions/setup/Base.js';
+</script>
 <!-- <script src="coilcam-functions/setup/PrinterPresets.js" type="application/javascript"></script> -->
-<script src="/Spiralize.4e28c305.js"></script>
+<script type="module" src="/e08dfef1b812b7d364558c4a4e28c305.js">
+  import {Spiralize} from './coilcam-functions/setup/Spiralize.js';
+</script>
+<script src="/62a5f76532795113d0ce4242d3537c84.js"></script>
 
 
-<script src="/Linear2D.c62a6d9b.js"></script>
-<script src="/Sinusoidal2D.e2b232af.js"></script>
-<script src="/BooleanUnion.93d28fae.js"></script>
+<script src="/f423524cf7b5ac7d51120098c62a6d9b.js"></script>
+<script src="/f151c0cb31d5834e46bd96e4e2b232af.js"></script>
+<script type="module" src="/d593f9d43b7982edcd13ee3b93d28fae.js">
+  import {BooleanUnion} from './coilcam-functions/boolean/BooleanUnion.js';
+</script>
+<script type="module" src="/d723ab84163137a2211e3c7df38e75c5.js">
+  import {BooleanDifference} from './coilcam-functions/boolean/BooleanDifference.js';
+</script>
+<script src="/168726dbe96b3ce427e7fedce31bb0bc.js"></script>
 <!-- <script type="application/javascript" src="coilcam-functions/boolean/BooleanUnion.js"></script> -->
-<script type="module" src="/test.34a04592.js"></script>
+<script type="module" src="/e6c006f096ce5b565225ceca34a04592.js"></script>
 
 </body>
 </html>
+
 
 
