@@ -19,8 +19,8 @@
   <script src="codemirror-5.65.13/mode/javascript/javascript.js"></script>
   <script src = "codemirror-5.65.13/addon/hint/show-hint.js"></script>
   <script src = "codemirror-5.65.13/addon/hint/javascript-hint.js"></script> 
+  <script src = "codemirror-5.65.13/addon/comment/comment.js"></script>
   <link rel="stylesheet" href = "codemirror-5.65.13/addon/hint/show-hint.css">
-
 <body>
 
 
@@ -47,11 +47,13 @@
         <textarea id = "editor"></textarea>
       </div>
     </div>
-    <div class="cell split-console">
+    <div class="split-console">
+      <div class="codemirror-window">
         <textarea id = "console"></textarea>
+      </div>
     </div> 
   </div>
-  <div class="split-window">
+  <div class="cell split-window">
     <canvas id="canvas"></canvas>
   </div>
 </div>
@@ -59,14 +61,14 @@
 
 <script>
   Split(['.split-editors', '.split-window'], {
-    sizes: [40, 60],
+    sizes: [70, 30],
     maxSize: [Infinity, Infinity],
     minSize: [40, 100],
     direction: 'horizontal',
     cursor: 'row-resize'
   });
   Split(['.split-editor', '.split-console'], {
-    sizes: [70, 30],
+    sizes: [60, 40],
     maxSize: [Infinity, Infinity],
     minSize: 10,
     direction: 'vertical',

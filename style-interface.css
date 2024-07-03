@@ -223,7 +223,6 @@ h2{
 
 .split { 
   width: 100%;
-  height: 600px;
   height: 100%;
   display: flex;
   background-color: pink;

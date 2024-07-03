@@ -1,7 +1,6 @@
 /* eslint no-console:0 consistent-return:0 */
 "use strict";
 
-
 function radToDeg(r) {
   return r * 180 / Math.PI;
 }
@@ -676,10 +675,36 @@ function setUpCodeMirror(){
   
   editorCodeMirror = CodeMirror.fromTextArea(textArea, {
     lineNumbers: true,
+    lineWrapping: true,
     mode: 'javascript',
-    extraKeys: {"Ctrl-Space": "autocomplete"},
   }); 
   editorCodeMirror.setSize("100%", "100%");
+  window.onload = function() { //shortcut to comment out line
+    editorCodeMirror.setOption("extraKeys", {"Cmd-/":function(cm) {
+      // let linesSelected = editorCodeMirror.listSelections();
+      // let linePositions = [];
+      // linesSelected.forEach(selection => {
+      //   const startLine = selection.anchor.line;
+      //   const endLine = selection.head.line;
+      //   linePositions.push(Math.abs(startLine - endLine));
+      // });
+      // if(linePositions.length == 0){
+      //   let cursor = cm.getCursor();
+      //   let lineNumber = cursor.line;
+      //   linePositionscm.getLine(lineNumber);
+      // }
+
+      let cursor = cm.getCursor();
+      let lineNumber = cursor.line;
+      let currentLine = cm.getLine(lineNumber);
+      if(currentLine.startsWith("//")){
+        editorCodeMirror.replaceRange(currentLine.slice(2), CodeMirror.Pos(lineNumber, 0), CodeMirror.Pos(lineNumber), 0);
+      } else{
+        editorCodeMirror.replaceRange("//"+currentLine, CodeMirror.Pos(lineNumber, 0), CodeMirror.Pos(lineNumber), 0);
+      }
+    }},);
+  }
+  
   getExampleVessel(pathToVessel) 
     .then(text => {editorCodeMirror.setValue(text)});
   
@@ -717,7 +742,6 @@ function setUpCodeMirror(){
         editorCodeMirror.setValue(getExampleVessel(newText));
       },);
     }());
-    console.log("hmmm");
   }
 
   
@@ -726,7 +750,6 @@ function setUpCodeMirror(){
 
   document.getElementById("b_run").addEventListener("click", runCode);
   function runCode() {
-    console.log("RUN");
     const codeToRun = editorCodeMirror.getValue();
     try {
       consoleCodeMirror.replaceRange(`$ `+eval(`${codeToRun}`)+"\n", CodeMirror.Pos(consoleCodeMirror.lastLine()));

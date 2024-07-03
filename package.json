@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "@codemirror/autocomplete": "^6.4.2",
-    "@codemirror/commands": "^6.2.2",
+    "@codemirror/commands": "^6.6.0",
     "@codemirror/lang-css": "^6.1.1",
     "@codemirror/lang-html": "^6.4.2",
     "@codemirror/lang-javascript": "^6.1.4",
@@ -17,6 +17,7 @@
     "@codemirror/state": "^6.2.0",
     "@codemirror/view": "^6.9.2",
     "@flatten-js/core": "^1.5.1",
+    "codemirror": "^6.0.1",
     "extrude-polyline": "^1.0.6",
     "jquery": "^3.7.1",
     "parcel-bundler": "^1.12.5",
