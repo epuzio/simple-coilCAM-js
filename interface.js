@@ -663,7 +663,7 @@ function setUpCodeMirror(){
   const vesselName = params.get('example'); //
   var pathToVessel = "";
   if(vesselName === null){
-    pathToVessel = 'example_vessels/CoilCAM_BumpsDish.js'; //name of vessel to be loaded as default
+    pathToVessel = 'quickstart_examples/QS.js'; //name of vessel to be loaded as default
   }else{
     console.log("caught path");
     var pathToVessel = 'example_vessels/'+vesselName+'.js'; //from URL parameters
@@ -734,15 +734,15 @@ function setUpCodeMirror(){
     "example-plate":["example_vessels/CoilCAM_BumpsDish.js"]
   };
 
-  for (let buttonID in exampleVessels){
-    (function () {
-    document.getElementById(buttonID).addEventListener("click", function() {
-        let newText = getExampleVessel(exampleVessels[buttonID])
-          .then(text => {editorCodeMirror.setValue(text)});
-        editorCodeMirror.setValue(getExampleVessel(newText));
-      },);
-    }());
-  }
+  // for (let buttonID in exampleVessels){
+  //   (function () {
+  //   document.getElementById(buttonID).addEventListener("click", function() {
+  //       let newText = getExampleVessel(exampleVessels[buttonID])
+  //         .then(text => {editorCodeMirror.setValue(text)});
+  //       editorCodeMirror.setValue(getExampleVessel(newText));
+  //     },);
+  //   }());
+  // }
 
   
 
@@ -768,15 +768,15 @@ function setUpCodeMirror(){
     newTab.click();
   }
 
-  document.getElementById("b_save").addEventListener("click", saveCode, {capture: true});
-  function saveCode(){
-    let textInEditor = editorCodeMirror.getValue();
-    var blob = new Blob([textInEditor], {type: "text/plain"});
-    var anchor = document.createElement("a");
-    anchor.href = URL.createObjectURL(blob);
-    anchor.download = "coilCAM-js.txt";
-    anchor.click();
-  }
+  // document.getElementById("b_save").addEventListener("click", saveCode, {capture: true});
+  // function saveCode(){
+  //   let textInEditor = editorCodeMirror.getValue();
+  //   var blob = new Blob([textInEditor], {type: "text/plain"});
+  //   var anchor = document.createElement("a");
+  //   anchor.href = URL.createObjectURL(blob);
+  //   anchor.download = "coilCAM-js.txt";
+  //   anchor.click();
+  // }
 
   
   

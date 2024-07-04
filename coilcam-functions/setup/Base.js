@@ -1,28 +1,9 @@
 // /* eslint-disable no-unused-vars */
-import Flatten from '../../node_modules/@flatten-js/core/dist/main.mjs';
+
+// import Flatten from '../../node_modules/@flatten-js/core/dist/main.mjs';
+import Flatten from 'https://unpkg.com/@flatten-js/core/dist/main.mjs';
 const {point, Polygon, Segment} = Flatten;
 const {intersect} = Flatten.BooleanOperations;
-
-// function triangularize(path){
-//     let trianglePath = [];
-//     for(let i = 0; i < path.length-4;i+=4){
-//       //vertical triangles
-//       let thicknessP1 = 1.5 + path[i+3];
-//       let thicknessP2 = 1.5 + path[i+7];
-  
-//       let p1 = [path[i], path[i+1], path[i+2]];
-//       let p2 = [path[i+4], path[i+5], path[i+6]];
-  
-//       trianglePath.push(path[i], path[i+1], path[i+2]+thicknessP1);
-//       trianglePath.push(path[i], path[i+1], path[i+2]-thicknessP1);
-//       trianglePath.push(path[i+4], path[i+5], path[i+6]-thicknessP2);
-  
-//       trianglePath.push(path[i+4], path[i+5], path[i+6]+thicknessP2);
-//       trianglePath.push(path[i+4], path[i+5], path[i+6]-thicknessP2);
-//       trianglePath.push(path[i], path[i+1], path[i+2]+thicknessP1);
-//     }
-//     return trianglePath;
-//   }
 
 export function baseSpiral(position, path, nbPointsInLayer, layerHeight, nozzle_diameter, radius, rotate=0){ 
     let basePoints = [];
