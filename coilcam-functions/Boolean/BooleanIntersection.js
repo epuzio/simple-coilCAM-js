@@ -2,7 +2,7 @@
 // import Flatten from '../../node_modules/@flatten-js/core/dist/main.mjs';
 import Flatten from 'https://unpkg.com/@flatten-js/core/dist/main.mjs';
 const {point, Polygon} = Flatten;
-const { intersect } = Flatten.BooleanOperations;
+const {intersect} = Flatten.BooleanOperations;
 
 export function union(path0, path1, radius){ //revise
   let path = [];

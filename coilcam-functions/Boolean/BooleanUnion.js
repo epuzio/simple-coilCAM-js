@@ -1,5 +1,4 @@
 // /* eslint-disable no-unused-vars */
-// import Flatten from '../../node_modules/@flatten-js/core/dist/main.mjs';
 import Flatten from 'https://unpkg.com/@flatten-js/core/dist/main.mjs';
 const {point, Polygon} = Flatten;
 const {unify} = Flatten.BooleanOperations;
@@ -77,15 +76,6 @@ export function union(path0, path1, by_layer = true){
     }
   }
   path = shapes.flat();
-  console.log("union path", path);
-
-
-  let test = new Map();
-  let key = [300, 300];
-  test.set(key, 2);
-
-  var t = test.get(key);
-  console.log("t", t); // Output: 2
   return path;
 }
 

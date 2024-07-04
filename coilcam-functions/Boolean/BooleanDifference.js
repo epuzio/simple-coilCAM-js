@@ -1,8 +1,7 @@
 // /* eslint-disable no-unused-vars */
-// import Flatten from '../../node_modules/@flatten-js/core/dist/main.mjs';
 import Flatten from 'https://unpkg.com/@flatten-js/core/dist/main.mjs';
 const {point, Polygon} = Flatten;
-const { subtract, intersect, outerClip} = Flatten.BooleanOperations;
+const {subtract} = Flatten.BooleanOperations;
 
 export function difference(path0, path1, by_layer = true){ //revise
   let path = [];
