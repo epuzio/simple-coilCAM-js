@@ -31,8 +31,11 @@ function setParameter(input, parameter_name, nbLayers=[], nbPointsInLayer=[]){
             }
             return input[0];
         }
-        if(input[0].length == nbPointsInLayer){
+        if(input[0].length == nbPointsInLayer || input[0].length == 0){
             let arr = [];
+            if(input[0].length == 0){
+                input[0] = new Array(nbPointsInLayer).fill(0);
+            }
             for(let i = 0; i < nbLayers; i++){
                 for(let j = 0; j < nbPointsInLayer; j++){
                     if(input[1].length == 0){
@@ -54,13 +57,39 @@ function setParameter(input, parameter_name, nbLayers=[], nbPointsInLayer=[]){
         }
         var error_str = "Length of values for parameter " + parameter_name + " are currently " + input[0].length + " and " + input[1].length + ", must be 0, 1 or equal to nbPointsInLayer: " + nbPointsInLayer + "/nbLayers: " + nbLayers;
         throw new Error(error_str);
-    } else{ //ssp, rsp, tsp, rsp, srsp run calculations using nbLayers
+    } else if(parameter_name === "translateShapingParameter"){ //2D array, requires different calculations
+        let valuesx = [];
+        let valuesy = [];
+        let values = [];
+        if(input.length === 0){ //array is not populated
+            let newArr = new Array(nbLayers).fill(0);
+            return new Array(2).fill(newArr, newArr);
+        } else if(!Array.isArray(input)){
+            let newArr = new Array(nbLayers).fill(0);
+            return new Array(2).fill(newArr, newArr);
+        } 
+        if(!Array.isArray(input[0])){ //x parameter
+            valuesx = new Array(nbLayers).fill(0);
+        } else if(input[0].length === 1){
+            valuesx = new Array(nbLayers).fill(input[0]);
+        } else{
+            valuesx = input[0];
+        }   
+        if(!Array.isArray(input[1])){ //y parameter
+            valuesy = new Array(nbLayers).fill(0);
+        } else if(input[0].length === 1){
+            valuesy = new Array(nbLayers).fill(input[1]);
+        } else{
+            valuesy = input[1];
+        }   
+        console.log(valuesx, valuesy);
+        return new Array(valuesx, valuesy);
+        
+               
+    } else { //ssp, rsp, srsp run calculations using nbLayers
         if(input.length === 0){
             if(parameter_name === "scalingRadiusShapingParameter"){
                 return new Array(nbLayers).fill(1);
-            }
-            if(parameter_name === "translateShapingParameter"){
-                return new Array(nbLayers).fill([0, 0, 0]);
             }
             if(parameter_name === "rotateShapingParameter" || parameter_name === "scaleShapingParameter"){
                 return new Array(nbLayers).fill(0);
@@ -99,8 +128,8 @@ function toolpathUnitGenerator(position, initialRadius, layerHeight, nbLayers, n
             //     console.log("start x:", position[0] + (initialRadius + srsp[j] * radsp[(nbLayers*j*k)+i] + ssp[j]) * Math.cos(angle + (rsp[j] * Math.PI/180)) + tsp[j][0]);
             //     console.log("start y:", position[1] + (initialRadius + srsp[j] * radsp[(nbLayers*j*k)+i] + ssp[j]) * Math.sin(angle + (rsp[j] * Math.PI/180)) + tsp[j][1]);
             // }
-            path.push(position[0] + (initialRadius + srsp[j] * radsp[(nbLayers*j*k)+i] + ssp[j]) * Math.cos(angle + (rsp[j] * Math.PI/180)) + tsp[j][0]);
-            path.push(position[1] + (initialRadius + srsp[j] * radsp[(nbLayers*j*k)+i] + ssp[j]) * Math.sin(angle + (rsp[j] * Math.PI/180)) + tsp[j][1]);
+            path.push(position[0] + (initialRadius + srsp[j] * radsp[(nbLayers*j*k)+i] + ssp[j]) * Math.cos(angle + (rsp[j] * Math.PI/180)) + tsp[0][j]);
+            path.push(position[1] + (initialRadius + srsp[j] * radsp[(nbLayers*j*k)+i] + ssp[j]) * Math.sin(angle + (rsp[j] * Math.PI/180)) + tsp[1][j]);
             path.push(position[2] + layerHeight * j);
             path.push(thsp[ctr]);
             ctr+=1;

@@ -663,10 +663,10 @@ function setUpCodeMirror(){
   const vesselName = params.get('example'); //
   var pathToVessel = "";
   if(vesselName === null){
-    pathToVessel = 'quickstart_examples/QS.js'; //name of vessel to be loaded as default
+    pathToVessel = 'quickstart_examples/tutorial_1.js'; //name of vessel to be loaded as default
   }else{
     console.log("caught path");
-    var pathToVessel = 'example_vessels/'+vesselName+'.js'; //from URL parameters
+    var pathToVessel = 'quickstart_examples/'+vesselName+'.js'; //from URL parameters
   }
   
   // configs
