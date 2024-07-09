@@ -40,8 +40,8 @@ function linear2D(amplitudeX1, offsetX1, amplitudeX2, offsetX2, nbPoints, values
             pointsX.push((amplitudeX1 * i + offsetX1[i]) + values0x[i]);
             pointsY.push((amplitudeX2 * i + offsetX2[i]) + values0y[i]);
         } else if (mode == "multiplicative"){
-            pointsX.push((amplitudeX1 * i + offsetX1[i]) * values1x[i]);
-            pointsY.push((amplitudeX2 * i + offsetX2[i]) * values1y[i]);
+            pointsX.push((amplitudeX1 * i + offsetX1[i]) * values0x[i]);
+            pointsY.push((amplitudeX2 * i + offsetX2[i]) * values0y[i]);
         }
     }
     return new Array(pointsX, pointsY);
