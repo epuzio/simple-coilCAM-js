@@ -73,7 +73,6 @@ export function union(path0, path1, by_layer = true){
       } else{
         shapeidx += 1;
       }
-      
     }
   }
   path = shapes.flat();
