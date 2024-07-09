@@ -30,7 +30,7 @@ toolpath = centerPrint(toolpath, position, potterbotBedSize, layerHeight);
 var potterbotNozzleDiameter = layerThickness;
 var potterbotPrintSpeed = 30;
 var gcodeString = generateGCode(toolpath, potterbotNozzleDiameter, potterbotPrintSpeed);
-downloadGCode(gcodeString, "demo_vase.gcode");
+// downloadGCode(gcodeString, "demo_vase.gcode");
 
 // DISPLAY PATH
 updatePath(toolpath);
