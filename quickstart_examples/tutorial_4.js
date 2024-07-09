@@ -1,15 +1,19 @@
 // INITIALIZATION PARAMETERS
-var position = [0, 0, 0];
-var layerHeight = 4.8;
+var layerThickness = 6; //6 mm
+var layerHeight = layerThickness * .5;
+var position = [0, 0, layerHeight*3];
 var radius = 40;
-var nbLayers = 30;
+var nbLayers = 40;
 var nbPointsInLayer = 50;
+
 
 // SHAPING PARAMETERS
 var radiusShapingParameter = sinusoidal(10, 10, 20, nbPointsInLayer, 0, "");
-var scaleShapingParameter = sinusoidal(20, 40, -50, nbLayers, 0, "");
-var scalingRadiusParameter = sinusoidal(.5, 20, 1, nbLayers, 0, "");
+var scaleShapingParameter = sinusoidal(18, 60, -5.5, nbLayers, 0, "");
+var scalingRadiusParameter = sinusoidal(.6, 30, -12, nbLayers, 0, "");
 
 // GENERATE TOOLPATH
-var toolpath = toolpathUnitGenerator(position, radius, layerHeight, nbLayers, nbPointsInLayer, radiusShapingParameter, scaleShapingParameter, scalingRadiusParameter, [], []);
+var toolpath = toolpathUnitGenerator(position, radius, layerHeight, nbLayers, nbPointsInLayer, radiusShapingParameter, scaleShapingParameter, scalingRadiusParameter, [], [], []);
+
+// DISPLAY PATH
 updatePath(toolpath);
