@@ -31,7 +31,7 @@ let editingParameter = false; //for editing toolpath
 let numEditPoints = 0;
 let initialTranslation = [0, -50, -700];
 var initialRotation = [degToRad(-45), degToRad(0), degToRad(10)];
-var initialFieldOfView = degToRad(40);
+var initialFieldOfView = degToRad(18);
 
 function updatePath(newPath, refPath=[]){
   updatedPath = true;
@@ -749,6 +749,7 @@ function setUpCodeMirror(){
 
 
   document.getElementById("b_run").addEventListener("click", runCode);
+  window.addEventListener('load', runCode);
   function runCode() {
     const codeToRun = editorCodeMirror.getValue();
     try {
@@ -767,6 +768,8 @@ function setUpCodeMirror(){
     newTab.target = "_blank";
     newTab.click();
   }
+
+  
 
   // document.getElementById("b_save").addEventListener("click", saveCode, {capture: true});
   // function saveCode(){
