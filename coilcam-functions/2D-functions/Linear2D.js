@@ -23,7 +23,7 @@ function linear2D(amplitudeX1, offsetX1, amplitudeX2, offsetX2, nbPoints, values
     } else if(!Array.isArray(values0x)){
         values0x = new Array(nbPoints).fill(values0x);
     } else if(values0x.length !== nbPoints){
-        throw new Error("Length of values0x in Sinusoidal2D must be 0 or 1 or equal to nbPoints");
+        throw new Error("Length of values0x in Linear2D must be 0 or 1 or equal to nbPoints");
     }
 
     if(values0y.length === 0){
