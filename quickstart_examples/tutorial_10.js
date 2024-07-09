@@ -19,15 +19,16 @@ var layerThicknessShapingParameter = linear(-.03, .8, nbLayers, 0, "");
 // GENERATE TOOLPATH
 var toolpath = toolpathUnitGenerator(position, radius, layerHeight, nbLayers, nbPointsInLayer, radiusShapingParameter, scaleShapingParameter, scalingRadiusParameter, translateShapingParameter, rotateShapingParameter, [[], layerThicknessShapingParameter]);
 
-// ADD BASE TO TOOLPATH
+// ADD BASE TO TOOLPATH, SPIRALIZE AND CENTER
 var b = base(position, toolpath, nbPointsInLayer, layerHeight, layerThickness, 53);
 toolpath = b.concat(toolpath);
+toolpath = spiralize(toolpath, layerHeight);
+toolpath = centerPrint(toolpath, position, potterbotBedSize, layerHeight);
 
 // PRINT GCODE
 var potterbotNozzleDiameter = layerThickness;
 var potterbotPrintSpeed = 30;
 var potterbotBedSize = [280, 265, 305];
-toolpath = centerPrint(toolpath, position, potterbotBedSize, layerHeight);
 var gcodeString = generateGCode(toolpath, potterbotNozzleDiameter, potterbotPrintSpeed);
 downloadGCode(gcodeString, "demo_vase.gcode");
 
