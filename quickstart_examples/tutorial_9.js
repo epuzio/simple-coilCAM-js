@@ -6,7 +6,6 @@ var radius = 40;
 var nbLayers = 40;
 var nbPointsInLayer = 50;
 
-
 // SHAPING PARAMETERS
 var radiusShapingParameter = sinusoidal(10, 10, 20, nbPointsInLayer, 0, "");
 var scaleShapingParameter = sinusoidal(18, 60, -5.5, nbLayers, 0, "");
@@ -23,6 +22,7 @@ var toolpath = toolpathUnitGenerator(position, radius, layerHeight, nbLayers, nb
 var b = base(position, toolpath, nbPointsInLayer, layerHeight, layerThickness, 53);
 toolpath = b.concat(toolpath);
 toolpath = spiralize(toolpath, layerHeight);
+var potterbotBedSize = [280, 265, 305];
 toolpath = centerPrint(toolpath, position, potterbotBedSize, layerHeight);
 
 // DISPLAY PATH
