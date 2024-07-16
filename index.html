@@ -1,8 +1,8 @@
 
 <!DOCTYPE html>
 <html>
-<!--<script src="https://greggman.github.io/webgl-lint/webgl-lint.js"></script>
--->
+<!-- CoilCAM functions (through coilCAM library) -->
+<script src=https://unpkg.com/coilcam-js></script>
 
 <!-- Resizing windows -->
 <script src="https://unpkg.com/split.js/dist/split.min.js"></script>
@@ -20,7 +20,7 @@
   <script src="codemirror-5.65.13/mode/javascript/javascript.js"></script>
   <script src = "codemirror-5.65.13/addon/hint/show-hint.js"></script>
   <script src = "codemirror-5.65.13/addon/hint/javascript-hint.js"></script> 
-  <script src = "codemirror-5.65.13/addon/comment/comment.js"></script>
+  <!-- <script src = "codemirror-5.65.13/addon/comment/comment.js"></script> -->
   <link rel="stylesheet" href = "codemirror-5.65.13/addon/hint/show-hint.css">
 <body>
 
@@ -58,6 +58,23 @@
     <canvas id="canvas"></canvas>
   </div>
 </div>
+
+
+<script> //test
+  // Wait for the document to load
+  // import {coilCAM} from 'coilcam-js';
+  
+  document.addEventListener("DOMContentLoaded", function() {
+    // var coilCAM = new coilCAM;
+    // coilCAM.test();
+    console.log("test");
+    var sineOperator = sinusoidal(3, 12, 50, 30, 0, "");
+    console.log(sineOperator);
+    // var toolpath = toolpathUnitGenerator([0, 0, 0], 30, 3, 30, 50, [], sineOperator, [], [], [], []);
+    // updatePath(spiralize(toolpath, 3));
+
+  });
+</script>
 
 
 <script>
@@ -177,7 +194,7 @@ for webgl-utils, m3, m4, and webgl-lessons-ui.
 
 
 <!-- CoilCAM Functions -->
-<script src="coilcam-functions/function-operators/Exponential.js"></script>
+<!-- <script src="coilcam-functions/function-operators/Exponential.js"></script>
 <script src="coilcam-functions/function-operators/Linear.js"></script>
 <script src="coilcam-functions/function-operators/Sinusoidal.js"></script>
 <script src="coilcam-functions/function-operators/Square.js"></script>
@@ -185,17 +202,17 @@ for webgl-utils, m3, m4, and webgl-lessons-ui.
 <script src="coilcam-functions/function-operators/Random.js"></script>
 <script type="module" src="coilcam-functions/function-operators/Waveform.js">
   import {Waveform} from './coilcam-functions/function-operators/Waveform.js';
-</script>
+</script> -->
 
-<script src="coilcam-functions/setup/GCodeGenerator.js"></script>
+<!-- <script src="coilcam-functions/setup/GCodeGenerator.js"></script>
 <script src="coilcam-functions/setup/Spiralize.js"></script>
 <script src="coilcam-functions/setup/ToolpathUnitGenerator.js"></script>
 <script src="coilcam-functions/setup/ShowCurve.js"></script>
 <script type="module" src="coilcam-functions/setup/Base.js">
   import {Base} from './coilcam-functions/setup/Base.js';
-</script>
+</script> -->
 <!-- <script src="coilcam-functions/setup/PrinterPresets.js" type="application/javascript"></script> -->
-<script type="module" src="coilcam-functions/setup/Spiralize.js">
+<!-- <script type="module" src="coilcam-functions/setup/Spiralize.js">
   import {Spiralize} from './coilcam-functions/setup/Spiralize.js';
 </script>
 <script src="coilcam-functions/setup/CenterPrint.js"></script>
@@ -209,9 +226,9 @@ for webgl-utils, m3, m4, and webgl-lessons-ui.
 <script type="module" src="coilcam-functions/boolean/BooleanDifference.js">
   import {BooleanDifference} from './coilcam-functions/boolean/BooleanDifference.js';
 </script>
-<script src="index.js"></script>
+<script src="index.js"></script> -->
 <!-- <script type="application/javascript" src="coilcam-functions/boolean/BooleanUnion.js"></script> -->
-<script type="module" src="coilcam-functions/test.js"></script>
+<!-- <script type="module" src="coilcam-functions/test.js"></script> -->
 
 </body>
 </html>
